@@ -51,7 +51,9 @@
   const fitSheet = () => {
     const enqEl = d.querySelector('[data-enquiry]');
     if (!vv || !enqEl || enqEl.hidden || DESK()) return;
-    enqEl.style.setProperty('--vvh', vv.height + 'px'); enqEl.style.setProperty('--vvt', vv.offsetTop + 'px');
+    // overlay + scrim stay full screen; the card is lifted above the keyboard and capped to what is still visible
+    const kb = Math.max(0, html.clientHeight - vv.offsetTop - vv.height);
+    enqEl.style.setProperty('--vvh', vv.height + 'px'); enqEl.style.setProperty('--kb', kb + 'px');
   };
   vv?.addEventListener('resize', fitSheet); vv?.addEventListener('scroll', fitSheet);
   $$('a[href="#top"]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); lenis ? lenis.scrollTo(0) : scrollTo({ top: 0, behavior: RM ? 'auto' : 'smooth' }); }));

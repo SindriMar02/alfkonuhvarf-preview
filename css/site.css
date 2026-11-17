@@ -334,7 +334,7 @@ html.motion.ready [data-chars],html.motion.ready [data-chars-hero]{visibility:vi
   .ep-people__grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
   .ep-person__contact{font-size:14px}
   .ep-foot__grid{grid-template-columns:1fr}
-  .ep-enq{padding:0;place-items:end stretch;inset:auto 0 auto 0;top:var(--vvt,0px);height:var(--vvh,100%)}
+  .ep-enq{padding:0 0 var(--kb,0px);place-items:end stretch}
   .ep-enq__card{grid-template-columns:1fr;max-height:min(92svh,calc(var(--vvh,100svh) - 8px));padding:56px 22px calc(28px + env(safe-area-inset-bottom));gap:22px;transform-origin:50% 100%}
   .ep-enq__div{display:none}
   .ep-enq__side{align-self:start}
