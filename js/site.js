@@ -223,6 +223,12 @@
   enq.addEventListener('keydown', e => { if (e.key === 'Escape') closeEnquiry(); else trap(card, e); });
 
   const MSG = { nafn: 'Vantar nafn.', netfang: 'Vantar gilt netfang.', simi: 'Vantar símanúmer.' };
+  // a field the person has started fixing loses its error at once; the message lists only what is still missing
+  form.addEventListener('input', e => {
+    if (!e.target.hasAttribute('aria-invalid')) return;
+    e.target.removeAttribute('aria-invalid');
+    err.textContent = $$('[aria-invalid]', form).map(i => MSG[i.name]).join(' ');
+  });
   form.addEventListener('submit', async e => {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(form));
