@@ -34,8 +34,26 @@
   }
   window.__ep = { get lenis() { return lenis; } };
   let locks = 0, savedY = 0;
-  const lock = () => { if (locks++) return; savedY = scrollY; lenis?.stop(); html.style.overflow = 'hidden'; };
-  const unlock = () => { if (--locks > 0) return; locks = 0; html.style.overflow = ''; lenis?.start(); };
+  const PIN = !FINE || !DESK();             // touch screens: pin the body (iOS pans the page under a focused field)
+  const lock = () => {
+    if (locks++) return;
+    savedY = scrollY; lenis?.stop(); html.style.overflow = 'hidden';
+    if (PIN) Object.assign(d.body.style, { position: 'fixed', top: `-${savedY}px`, left: '0', right: '0', width: '100%' });
+  };
+  const unlock = () => {
+    if (--locks > 0) return; locks = 0;
+    if (PIN) { Object.assign(d.body.style, { position: '', top: '', left: '', right: '', width: '' }); }
+    html.style.overflow = '';
+    if (lenis) { lenis.scrollTo(savedY, { immediate: true, force: true }); lenis.start(); } else window.scrollTo(0, savedY);
+  };
+  // D2: on phones the sheet lives inside the visual viewport, so with the keyboard up it shrinks and scrolls to Submit
+  const vv = window.visualViewport;
+  const fitSheet = () => {
+    const enqEl = d.querySelector('[data-enquiry]');
+    if (!vv || !enqEl || enqEl.hidden || DESK()) return;
+    enqEl.style.setProperty('--vvh', vv.height + 'px'); enqEl.style.setProperty('--vvt', vv.offsetTop + 'px');
+  };
+  vv?.addEventListener('resize', fitSheet); vv?.addEventListener('scroll', fitSheet);
   $$('a[href="#top"]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); lenis ? lenis.scrollTo(0) : scrollTo({ top: 0, behavior: RM ? 'auto' : 'smooth' }); }));
 
   /* ---------- fit the hero title to the column ---------- */
@@ -196,7 +214,7 @@
     enqOpen = true; enqTrigger = e?.currentTarget || null;
     if (!done.hidden) { done.hidden = true; form.hidden = false; form.reset(); G?.set([form], { clearProps: 'all' }); }
     err.textContent = ''; $$('[aria-invalid]', form).forEach(x => x.removeAttribute('aria-invalid'));
-    enq.hidden = false; lock(); setInert(true);
+    enq.hidden = false; lock(); setInert(true); fitSheet();
     const viaKey = e && e.detail === 0;
     if (G && !RM) {
       if (DESK()) G.fromTo(card, { scale: 0, rotateX: -90, yPercent: -100, rotate: -25, transformPerspective: 1000 }, { scale: 1, rotateX: 0, yPercent: 0, rotate: 0, duration: DUR.l, ease: E.out, overwrite: true });
@@ -236,7 +254,7 @@
     if (!data.nafn.trim()) bad.push('nafn');
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data.netfang.trim())) bad.push('netfang');
     if ((data.simi.match(/\d/g) || []).length < 7) bad.push('simi');
-    $$('input', form).forEach(i => i.toggleAttribute('aria-invalid', bad.includes(i.name)));
+    $$('input', form).forEach(i => bad.includes(i.name) ? i.setAttribute('aria-invalid', 'true') : i.removeAttribute('aria-invalid'));
     if (bad.length) { err.textContent = bad.map(k => MSG[k]).join(' '); $(`[name=${bad[0]}]`, form).focus(); return; }
     err.textContent = '';
     const btn = $('button[type=submit]', form), lbl = $('.ep-btn__label', btn), was = lbl.textContent; btn.disabled = true; lbl.textContent = 'Sendi…';

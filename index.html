@@ -261,12 +261,12 @@
     <span class="ep-enq__div" aria-hidden="true"><img src="favicon.png" width="40" height="40" alt=""></span>
     <form class="ep-enq__form" data-enquiry-form data-mode="preview" data-endpoint="/api/fyrirspurn" novalidate>
       <input type="hidden" name="listing" value="923351">
-      <label class="ep-field"><span class="ep-label">Nafn*</span><input name="nafn" autocomplete="name" required maxlength="120"></label>
-      <label class="ep-field"><span class="ep-label">Netfang*</span><input name="netfang" type="email" autocomplete="email" inputmode="email" spellcheck="false" autocapitalize="off" required maxlength="160"></label>
-      <label class="ep-field"><span class="ep-label">Símanúmer*</span><input name="simi" type="tel" autocomplete="tel" inputmode="tel" required maxlength="40"></label>
+      <label class="ep-field"><span class="ep-label">Nafn*</span><input name="nafn" autocomplete="name" required maxlength="120" aria-describedby="enq-err"></label>
+      <label class="ep-field"><span class="ep-label">Netfang*</span><input name="netfang" type="email" autocomplete="email" inputmode="email" spellcheck="false" autocapitalize="off" required maxlength="160" aria-describedby="enq-err"></label>
+      <label class="ep-field"><span class="ep-label">Símanúmer*</span><input name="simi" type="tel" autocomplete="tel" inputmode="tel" required maxlength="40" aria-describedby="enq-err"></label>
       <label class="ep-field"><span class="ep-label">Fyrirspurn</span><textarea name="fyrirspurn" rows="3" maxlength="2000"></textarea></label>
       <label class="ep-hp" aria-hidden="true">Vefsíða<input name="vefsida" tabindex="-1" autocomplete="off"></label>
-      <p class="ep-enq__err" data-enquiry-err role="alert"></p>
+      <p class="ep-enq__err" id="enq-err" data-enquiry-err role="alert"></p>
       <button class="ep-btn ep-btn--ink" type="submit"><span class="ep-btn__fill" aria-hidden="true"></span><span class="ep-btn__label">Senda fyrirspurn</span></button>
     </form>
     <div class="ep-enq__done" data-enquiry-done hidden tabindex="-1">

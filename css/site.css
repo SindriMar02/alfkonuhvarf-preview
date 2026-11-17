@@ -23,6 +23,7 @@ a{color:inherit;text-underline-offset:.18em;text-decoration-thickness:1px}
 button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 h1,h2,.ep-lead,.ep-plans__note{text-wrap:balance}
 main{scroll-margin-top:var(--head)}
+main>section,.ep-hero-wrap,.ep-foot{overflow-x:clip}
 h1,h2,h3,p,ul,ol,dl,dd,figure{margin:0;padding:0}
 ul,ol{list-style:none}
 .n{font-family:var(--sans);font-variant-numeric:lining-nums tabular-nums}
@@ -67,12 +68,13 @@ input:focus-visible,textarea:focus-visible{outline:2px solid var(--gold);outline
 /* header + rail; ink follows the ground under the header (data-ground on <html>) */
 .ep-head{position:fixed;inset:0 0 auto;z-index:50;height:var(--head);display:flex;align-items:center;justify-content:space-between;padding:0 max(var(--g),env(safe-area-inset-right)) 0 max(var(--g),env(safe-area-inset-left));pointer-events:none}
 .ep-head>*{pointer-events:auto}
-.ep-head__logo{position:relative;display:block;width:clamp(124px,11vw,164px)}
+.ep-head__logo{position:relative;display:flex;align-items:center;min-height:44px;width:clamp(124px,11vw,164px)}
+.ep-head__logo .is-light{top:50%!important;bottom:auto!important;transform:translateY(-50%)}
 .ep-head__logo img{width:100%;height:auto;transition:opacity var(--s) ease}
 .ep-head__logo .is-light{position:absolute;inset:0;opacity:0}
 html[data-ground=dark] .ep-head__logo .is-dark,html[data-ground=photo] .ep-head__logo .is-dark{opacity:0}
 html[data-ground=dark] .ep-head__logo .is-light,html[data-ground=photo] .ep-head__logo .is-light{opacity:1}
-.ep-btn--head{min-height:42px;padding:0 20px;font-size:12px;transition:color var(--s) ease,transform .2s var(--out)}
+.ep-btn--head{min-height:44px;padding:0 20px;font-size:12px;transition:color var(--s) ease,transform .2s var(--out)}
 html[data-ground=dark] .ep-btn--head,html[data-ground=photo] .ep-btn--head{color:var(--paper)}
 html[data-ground=dark] .ep-btn--head .ep-btn__fill,html[data-ground=photo] .ep-btn--head .ep-btn__fill{background:var(--paper)}
 @media (hover:hover) and (pointer:fine){html[data-ground=dark] .ep-btn--head:hover,html[data-ground=photo] .ep-btn--head:hover{color:var(--ink)}}
@@ -244,7 +246,7 @@ html[data-ground=dark] .ep-btn--head .ep-btn__fill,html[data-ground=photo] .ep-b
 .ep-person__name{font:600 clamp(24px,2vw,30px)/1.1 var(--serif);letter-spacing:-.025em;margin-bottom:8px}
 .ep-person .ep-label{color:var(--muted);letter-spacing:.16em}
 .ep-person__contact{margin-top:14px;display:flex;flex-direction:column;gap:2px;font-size:16px}
-.ep-person__contact a{text-decoration-color:rgba(16,12,37,.3);min-height:32px;display:inline-flex;align-items:center}
+.ep-person__contact a{text-decoration-color:rgba(16,12,37,.3);min-height:44px;display:inline-flex;align-items:center}
 
 /* footer */
 .ep-foot{background:var(--ink-2);color:var(--on-dark);padding:clamp(64px,7vw,110px) 0 28px;font-size:13px;line-height:1.65}
@@ -332,8 +334,8 @@ html.motion.ready [data-chars],html.motion.ready [data-chars-hero]{visibility:vi
   .ep-people__grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
   .ep-person__contact{font-size:14px}
   .ep-foot__grid{grid-template-columns:1fr}
-  .ep-enq{padding:0;place-items:end stretch}
-  .ep-enq__card{grid-template-columns:1fr;max-height:92svh;padding:56px 22px calc(28px + env(safe-area-inset-bottom));gap:22px;transform-origin:50% 100%}
+  .ep-enq{padding:0;place-items:end stretch;inset:auto 0 auto 0;top:var(--vvt,0px);height:var(--vvh,100%)}
+  .ep-enq__card{grid-template-columns:1fr;max-height:min(92svh,calc(var(--vvh,100svh) - 8px));padding:56px 22px calc(28px + env(safe-area-inset-bottom));gap:22px;transform-origin:50% 100%}
   .ep-enq__div{display:none}
   .ep-enq__side{align-self:start}
   .ep-enq__done{grid-column:1}
