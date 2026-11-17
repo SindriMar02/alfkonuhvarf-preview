@@ -335,6 +335,8 @@ html.motion.ready [data-chars],html.motion.ready [data-chars-hero]{visibility:vi
   .ep-person__contact{font-size:14px}
   .ep-foot__grid{grid-template-columns:1fr}
   .ep-enq{padding:0 0 var(--kb,0px);place-items:end stretch}
+  /* the strip under the lifted card (behind Safari's URL pill and keyboard bar) continues the sheet, never the page */
+  .ep-enq::after{content:'';position:absolute;left:0;right:0;bottom:0;height:var(--kb,0px);background:var(--frost);pointer-events:none}
   .ep-enq__card{grid-template-columns:1fr;max-height:min(92svh,calc(var(--vvh,100svh) - 8px));padding:56px 22px calc(28px + env(safe-area-inset-bottom));gap:22px;transform-origin:50% 100%}
   .ep-enq__div{display:none}
   .ep-enq__side{align-self:start}
